@@ -45,14 +45,14 @@ python -m pip install mysql-connector-python
 Use a dedicated test database. The DDL script drops and recreates the project tables before loading sample data, so do not run it against a database containing data you need to keep.
 
 1. Start MySQL Server and connect with MySQL Workbench or another MySQL client.
-2. Create and select a database named `cs340_rizvifa`:
+2. Choose a name for your test database, then create and select it. Replace `<your_database_name>` below with the name you chose:
 
    ```sql
-   CREATE DATABASE IF NOT EXISTS cs340_rizvifa;
-   USE cs340_rizvifa;
+   CREATE DATABASE IF NOT EXISTS your_database_name;
+   USE <your_database_name>;
    ```
 
-3. Run [`SQL/martial_notes_ddl.sql`](./SQL/martial_notes_ddl.sql) with `cs340_rizvifa` selected. This creates the tables and inserts sample records.
+3. Run [`SQL/martial_notes_ddl.sql`](./SQL/martial_notes_ddl.sql) with your database selected. This creates the tables and inserts sample records.
 
 ## Configure and run the application
 
@@ -60,12 +60,12 @@ Open [`application/run_martial_notes_app.py`](./application/run_martial_notes_ap
 
 ```python
 host='localhost',
-user='root',
+user='<your MySQL username>',
 password='<your MySQL password>',
-database='cs340_rizvifa'
+database='<your_database_name>'
 ```
 
-Replace the example username and password with your own. Do not put real credentials in files you share or commit.
+Replace `<your_database_name>` with the database name you chose, and replace the username and password with your own MySQL credentials. Do not put real credentials in files you share or commit.
 
 From the repository root, run:
 
