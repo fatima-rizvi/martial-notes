@@ -8,10 +8,7 @@
 
 """Exercise every MartialNotesQueries method against the configured database."""
 
-import os
-
 import mysql.connector
-
 from martial_notes_app import MartialNotesQueries
 
 
