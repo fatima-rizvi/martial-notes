@@ -42,8 +42,8 @@ def main():
     conn = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='R00tP@ssw0rd',
-        database='cs340_rizvifa'
+        password='<db password>',
+        database='<db name>'
     )
     cursor = conn.cursor()
 
