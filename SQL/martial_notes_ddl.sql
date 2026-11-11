@@ -3,13 +3,14 @@
 -- Disabling commits and foreign key checks to minimize import errors
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT = 0;
+START TRANSACTION;
 
 -- Creating our 5 tables (4 entities and 1 intersection table)
 DROP TABLE IF EXISTS MartialArts;
 
 CREATE TABLE MartialArts (
     martialArtID int NOT NULL AUTO_INCREMENT,
-    name varchar(50),
+    name varchar(100) NOT NULL,
     PRIMARY KEY (martialArtID)
 );
 
@@ -17,8 +18,8 @@ DROP TABLE IF EXISTS Moves;
 
 CREATE TABLE Moves (
     moveID int NOT NULL AUTO_INCREMENT,
-    name varchar(100),
-    description text,
+    name varchar(100) NOT NULL,
+    description text NOT NULL,
     PRIMARY KEY (moveID)
 );
 
@@ -47,7 +48,7 @@ DROP TABLE IF EXISTS StudySessions;
 
 CREATE TABLE StudySessions (
     studySessionID int AUTO_INCREMENT,
-    date date NOT NULL,
+    date datetime NOT NULL,
     duration time NOT NULL,
     martialArtID int NOT NULL, 
     eventID int, 
@@ -82,7 +83,7 @@ VALUES
 ),
 (
     'Parallel Elbow Strike',
-    "Swing your elbow at your opponent, keeping your strike parallel to the ground. Aim to hit your opponent's head in theri jaw, temple, or chin. This does not need a lot of force behind it to be effective."
+    'Swing your elbow at your opponent, keeping your strike parallel to the ground. Aim to hit your opponent''s head in their jaw, temple, or chin. This does not need a lot of force behind it to be effective.'
 
 ),
 (
@@ -146,25 +147,25 @@ INSERT INTO StudySessions (
 )
 VALUES 
 (
-    '2026-10-03',
+    '2026-10-03 00:00:00',
     '01:01:00',
     (select martialArtID from MartialArts where name = 'Muay Thai'),
     null
 ),
 (
-    '2026-10-05',
+    '2026-10-05 00:00:00',
     '00:37:00',
     (select martialArtID from MartialArts where name = 'Jiu Jitsu'),
     (select eventID from Events where name = 'BJJ Open')
 ),
 (
-    '2026-10-07',
+    '2026-10-07 00:00:00',
     '00:53:00',
     (select martialArtID from MartialArts where name = 'MMA'),
     (select eventID from Events where name = 'UFC Fight Night')
 );
 
 
--- Disabling commits and foreign ley checks to minimize import errors
+-- Re-enabling foreign key checks and commiting changes
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
