@@ -40,7 +40,7 @@ def main():
 
     # replace the values below with your own DB information
     conn = mysql.connector.connect(
-        host='localhost',        
+        host='localhost',
         user='<your MySQL username>',
         password='<your MySQL password>',
         database='<your_database_name>'
