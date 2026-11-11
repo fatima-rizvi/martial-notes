@@ -26,7 +26,7 @@ class MartialNotesQueries(object):
 
     def get_all_martial_arts(self):
         """Return every record from the MartialArts table."""
-        sql = "SELECT * FROM MartialArts;"
+        sql = "SELECT * FROM MartialArts ORDER BY name;"
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
@@ -38,7 +38,7 @@ class MartialNotesQueries(object):
 
     def get_all_moves(self):
         """Return every record from the Moves table."""
-        sql = "SELECT * FROM Moves;"
+        sql = "SELECT * FROM Moves ORDER BY name;"
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
@@ -51,29 +51,49 @@ class MartialNotesQueries(object):
     def get_moves_for_martial_art(self, martial_art_id):
         """Return all move names and descriptions for a given martial art."""
         sql = """
-            SELECT Moves.name, description
+            SELECT Moves.name AS moveName, Moves.description AS moveDescription
             FROM Moves
             INNER JOIN MartialArtMoves 
             ON Moves.moveID = MartialArtMoves.moveID
             INNER JOIN MartialArts 
             ON MartialArtMoves.martialArtID = MartialArts.martialArtID
-            WHERE MartialArts.martialArtID = %s;
+            WHERE MartialArts.martialArtID = %s
+            ORDER BY Moves.name;
         """
         self.cursor.execute(sql, (martial_art_id,))
         return self.cursor.fetchall()
 
     def get_all_martial_art_moves(self):
-        """Return every relationship in the MartialArtMoves table."""
-        sql = "SELECT * FROM MartialArtMoves;"
+        """Return every relationship with martial art and move names."""
+        sql = """
+            SELECT MartialArtMoves.martialArtID,
+                   MartialArtMoves.moveID,
+                   MartialArts.name AS martialArtName,
+                   Moves.name AS moveName
+            FROM MartialArtMoves
+            INNER JOIN MartialArts
+            ON MartialArtMoves.martialArtID = MartialArts.martialArtID
+            INNER JOIN Moves
+            ON MartialArtMoves.moveID = Moves.moveID
+            ORDER BY MartialArts.name, Moves.name;
+        """
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
     def get_martial_art_move_by_id(self, martial_art_id, move_id):
-        """Return a single MartialArtMoves row by the composite key."""
+        """Return one relationship with its martial art and move names."""
         sql = """
-            SELECT *
+            SELECT MartialArtMoves.martialArtID,
+                   MartialArtMoves.moveID,
+                   MartialArts.name AS martialArtName,
+                   Moves.name AS moveName
             FROM MartialArtMoves
-            WHERE martialArtID = %s AND moveID = %s;
+            INNER JOIN MartialArts
+            ON MartialArtMoves.martialArtID = MartialArts.martialArtID
+            INNER JOIN Moves
+            ON MartialArtMoves.moveID = Moves.moveID
+            WHERE MartialArtMoves.martialArtID = %s
+              AND MartialArtMoves.moveID = %s;
         """
         self.cursor.execute(sql, (martial_art_id, move_id))
         return self.cursor.fetchone()
@@ -81,7 +101,9 @@ class MartialNotesQueries(object):
     def get_martial_art_move_details(self, martial_art_id, move_id):
         """Return a move's name, martial art type, and description for a relationship."""
         sql = """
-            SELECT Moves.name, MartialArts.name AS martial_art_type, Moves.description
+            SELECT Moves.name AS moveName,
+                   MartialArts.name AS martialArtName,
+                   Moves.description AS moveDescription
             FROM MartialArtMoves
             INNER JOIN Moves 
             ON MartialArtMoves.moveID = Moves.moveID
@@ -94,38 +116,112 @@ class MartialNotesQueries(object):
         return self.cursor.fetchone()
 
     def get_all_events(self):
-        """Return every record from the Events table."""
-        sql = "SELECT * FROM Events;"
+        """Return every event with its associated martial art name."""
+        sql = """
+            SELECT Events.eventID,
+                   Events.name AS eventName,
+                   Events.date,
+                   Events.martialArtID,
+                   MartialArts.name AS martialArtName
+            FROM Events
+            LEFT JOIN MartialArts
+            ON Events.martialArtID = MartialArts.martialArtID
+            ORDER BY Events.name;
+        """
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
     def get_events_for_martial_art(self, martial_art_id):
-        """Return every event attached to a specific martial art."""
-        sql = "SELECT * FROM Events WHERE martialArtID = %s;"
+        """Return events for a martial art, including its name."""
+        sql = """
+            SELECT Events.eventID,
+                   Events.name AS eventName,
+                   Events.date,
+                   Events.martialArtID,
+                   MartialArts.name AS martialArtName
+            FROM Events
+            LEFT JOIN MartialArts
+            ON Events.martialArtID = MartialArts.martialArtID
+            WHERE Events.martialArtID = %s
+            ORDER BY Events.name;
+        """
         self.cursor.execute(sql, (martial_art_id,))
         return self.cursor.fetchall()
 
     def get_event_by_id(self, event_id):
-        """Return a single event record by its primary key."""
-        sql = "SELECT * FROM Events WHERE eventID = %s;"
+        """Return one event with its associated martial art name."""
+        sql = """
+            SELECT Events.eventID,
+                   Events.name AS eventName,
+                   Events.date,
+                   Events.martialArtID,
+                   MartialArts.name AS martialArtName
+            FROM Events
+            LEFT JOIN MartialArts
+            ON Events.martialArtID = MartialArts.martialArtID
+            WHERE Events.eventID = %s;
+        """
         self.cursor.execute(sql, (event_id,))
         return self.cursor.fetchone()
 
     def get_all_study_sessions(self):
-        """Return every record from the StudySessions table."""
-        sql = "SELECT * FROM StudySessions;"
+        """Return every session with its martial art and optional event names."""
+        sql = """
+            SELECT StudySessions.studySessionID,
+                   StudySessions.date AS sessionDate,
+                   StudySessions.duration AS sessionDuration,
+                   StudySessions.martialArtID,
+                   StudySessions.eventID,
+                   MartialArts.name AS martialArtName,
+                   Events.name AS eventName
+            FROM StudySessions
+            INNER JOIN MartialArts
+            ON StudySessions.martialArtID = MartialArts.martialArtID
+            LEFT JOIN Events
+            ON StudySessions.eventID = Events.eventID
+            ORDER BY MartialArts.name, Events.name;
+        """
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
     def get_study_sessions_for_martial_art(self, martial_art_id):
-        """Return every study session attached to a specific martial art."""
-        sql = "SELECT * FROM StudySessions WHERE martialArtID = %s;"
+        """Return sessions for a martial art with related names."""
+        sql = """
+            SELECT StudySessions.studySessionID,
+                   StudySessions.date AS sessionDate,
+                   StudySessions.duration AS sessionDuration,
+                   StudySessions.martialArtID,
+                   StudySessions.eventID,
+                   MartialArts.name AS martialArtName,
+                   Events.name AS eventName
+            FROM StudySessions
+            INNER JOIN MartialArts
+            ON StudySessions.martialArtID = MartialArts.martialArtID
+            LEFT JOIN Events
+            ON StudySessions.eventID = Events.eventID
+            WHERE StudySessions.martialArtID = %s
+            ORDER BY MartialArts.name, Events.name;
+        """
         self.cursor.execute(sql, (martial_art_id,))
         return self.cursor.fetchall()
 
     def get_study_session_by_id(self, study_session_id):
-        """Return a single study session record by its primary key."""
-        sql = "SELECT * FROM StudySessions WHERE studySessionID = %s;"
+        """Return one session with its martial art and optional event names."""
+        sql = """
+            SELECT StudySessions.studySessionID,
+                   StudySessions.date AS sessionDate,
+                   StudySessions.duration AS sessionDuration,
+                   StudySessions.martialArtID,
+                   StudySessions.eventID,
+                   MartialArts.name AS martialArtName,
+                   Events.name AS eventName
+            FROM StudySessions
+            INNER JOIN MartialArts
+            ON StudySessions.martialArtID = MartialArts.martialArtID
+            LEFT JOIN Events
+            ON StudySessions.eventID = Events.eventID
+            WHERE StudySessions.studySessionID = %s;
+        """
         self.cursor.execute(sql, (study_session_id,))
         return self.cursor.fetchone()
 
