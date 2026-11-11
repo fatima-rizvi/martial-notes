@@ -98,6 +98,6 @@ The prompts used to generate the python code and the README are available in the
 - The virtual environment steps in the readme were added by us after the agent created the README, and we got those steps from the OSU CS340 canvas page "Exploration - Designing a Python Class for Database CRUD Operations"
 
 Date 11/11/2026
-- Some of the updates we made to the code after getting our peer feedback (specifically: adding "ORDER BY" to queries, adding the name columns to the results, adding spacing to the CLI output, changing the event example in the test runner) were made using GitHub CoPilot. The prompt used to make these changes is in the `/prompts` folder in `Proj-Step-3-Updates-Post-Feedback.md`
+- Some of the updates we made to the code after getting our peer feedback (specifically: adding "ORDER BY" to queries, adding the name columns to the results, adding spacing to the CLI output, changing the event example in the test runner) were made using GitHub CoPilot. The prompts used to make these changes are in the `/prompts` folder in `Proj-Step-3-Updates-Post-Feedback.md`
 
 All other work (the original SQL code) is our own original work.
