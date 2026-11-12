@@ -1,0 +1,51 @@
+=== Reset database ===
+Reset database result: 1
+Read event after reset: (1, 'BJJ Open', '2026-11-15 00:00:00', 2, 'Jiu Jitsu')
+Read martial arts after reset: [(2, 'Jiu Jitsu'), (3, 'MMA'), (1, 'Muay Thai')]
+
+=== Read queries ===
+Select all martial arts: [(2, 'Jiu Jitsu'), (3, 'MMA'), (1, 'Muay Thai')]
+Select martial art by ID: (1, 'Muay Thai')
+Select all moves: [(1, 'Jab', 'A straight punch with your lead hand'), (2, 'Parallel Elbow Strike', "Swing your elbow at your opponent, keeping your strike parallel to the ground. Aim to hit your opponent's head in their jaw, temple, or chin. This does not need a lot of force behind it to be effective."), (3, 'Shrimping', 'A hip escape. Practice by starting on laying on your back, knees bent and feet planted on the ground. Bridge your hips up and roll onto one of your shoulders. Use your foot (same side as the shoulder you are laying on) to push your body and slide your hips back while you pivot on your shoulder. Your body should curve (like a shrimp). Reset your body and repeat the movement on the other side. You should be able to move all the way down the mat like this. This is a good way to escape an opponent standing over you without giving them more openings. ')]
+Select move by ID: (1, 'Jab', 'A straight punch with your lead hand')
+Select moves for martial art: [('Jab', 'A straight punch with your lead hand'), ('Parallel Elbow Strike', "Swing your elbow at your opponent, keeping your strike parallel to the ground. Aim to hit your opponent's head in their jaw, temple, or chin. This does not need a lot of force behind it to be effective.")]
+Select all martial art moves: [(2, 3, 'Jiu Jitsu', 'Shrimping'), (3, 1, 'MMA', 'Jab'), (3, 2, 'MMA', 'Parallel Elbow Strike'), (1, 1, 'Muay Thai', 'Jab'), (1, 2, 'Muay Thai', 'Parallel Elbow Strike')]
+Select martial art move by ID: (1, 1, 'Muay Thai', 'Jab')
+Martial art move details: ('Jab', 'Muay Thai', 'A straight punch with your lead hand')
+Select all events: [(1, 'BJJ Open', '2026-11-15 00:00:00', 2, 'Jiu Jitsu'), (2, 'Gym Open Mat', '2026-12-07 00:00:00', None, None), (3, 'UFC Fight Night', '2026-12-19 00:00:00', 3, 'MMA')]
+Select events for martial art: [(1, 'BJJ Open', '2026-11-15 00:00:00', 2, 'Jiu Jitsu')]
+Select event by ID: (1, 'BJJ Open', '2026-11-15 00:00:00', 2, 'Jiu Jitsu')
+Select all study sessions: [(2, '2026-10-05 00:00:00', '00:37:00', 2, 1, 'Jiu Jitsu', 'BJJ Open'), (3, '2026-10-07 00:00:00', '00:53:00', 3, 3, 'MMA', 'UFC Fight Night'), (1, '2026-10-03 00:00:00', '01:01:00', 1, None, 'Muay Thai', None)]
+Select study sessions for martial art: [(1, '2026-10-03 00:00:00', '01:01:00', 1, None, 'Muay Thai', None)]
+Select study session by ID: (1, '2026-10-03 00:00:00', '01:01:00', 1, None, 'Muay Thai', None)
+
+=== Create operations ===
+Add martial art row count: 1
+MartialArts table after insert: [(2, 'Jiu Jitsu'), (4, 'Karate'), (3, 'MMA'), (1, 'Muay Thai')]
+Add move row count: 1
+Moves table after insert: [(4, 'Front Kick', 'A direct kick thrown with the lead leg.'), (1, 'Jab', 'A straight punch with your lead hand'), (2, 'Parallel Elbow Strike', "Swing your elbow at your opponent, keeping your strike parallel to the ground. Aim to hit your opponent's head in their jaw, temple, or chin. This does not need a lot of force behind it to be effective."), (3, 'Shrimping', 'A hip escape. Practice by starting on laying on your back, knees bent and feet planted on the ground. Bridge your hips up and roll onto one of your shoulders. Use your foot (same side as the shoulder you are laying on) to push your body and slide your hips back while you pivot on your shoulder. Your body should curve (like a shrimp). Reset your body and repeat the movement on the other side. You should be able to move all the way down the mat like this. This is a good way to escape an opponent standing over you without giving them more openings. ')]
+Add martial art move row count: 1
+MartialArtMoves table after insert: [(2, 3, 'Jiu Jitsu', 'Shrimping'), (3, 1, 'MMA', 'Jab'), (3, 2, 'MMA', 'Parallel Elbow Strike'), (1, 4, 'Muay Thai', 'Front Kick'), (1, 1, 'Muay Thai', 'Jab'), (1, 2, 'Muay Thai', 'Parallel Elbow Strike')]
+Add event with null martialArtID row count: 1
+Add event with martialArtID row count: 1
+Events table after inserts: [(1, 'BJJ Open', '2026-11-15 00:00:00', 2, 'Jiu Jitsu'), (2, 'Gym Open Mat', '2026-12-07 00:00:00', None, None), (4, 'Test Event', '2027-01-15 00:00:00', None, None), (5, 'Test Event 2', '2027-01-16 00:00:00', 1, 'Muay Thai'), (3, 'UFC Fight Night', '2026-12-19 00:00:00', 3, 'MMA')]
+Add study session with null eventID row count: 1
+Add study session with eventID row count: 1
+Study sessions table after inserts: [(2, '2026-10-05 00:00:00', '00:37:00', 2, 1, 'Jiu Jitsu', 'BJJ Open'), (3, '2026-10-07 00:00:00', '00:53:00', 3, 3, 'MMA', 'UFC Fight Night'), (1, '2026-10-03 00:00:00', '01:01:00', 1, None, 'Muay Thai', None), (4, '2027-01-17 00:00:00', '00:45:00', 1, None, 'Muay Thai', None), (5, '2027-01-18 00:00:00', '00:50:00', 1, 1, 'Muay Thai', 'BJJ Open')]
+
+=== Update operations ===
+Update martial art move row count: 1
+MartialArtMoves table after update: [(2, 4, 'Jiu Jitsu', 'Front Kick'), (2, 3, 'Jiu Jitsu', 'Shrimping'), (3, 1, 'MMA', 'Jab'), (3, 2, 'MMA', 'Parallel Elbow Strike'), (1, 1, 'Muay Thai', 'Jab'), (1, 2, 'Muay Thai', 'Parallel Elbow Strike')]
+Update move row count: 1
+Moves table after update: [(4, 'Front Kick', 'Updated description for the front kick.'), (1, 'Jab', 'A straight punch with your lead hand'), (2, 'Parallel Elbow Strike', "Swing your elbow at your opponent, keeping your strike parallel to the ground. Aim to hit your opponent's head in their jaw, temple, or chin. This does not need a lot of force behind it to be effective."), (3, 'Shrimping', 'A hip escape. Practice by starting on laying on your back, knees bent and feet planted on the ground. Bridge your hips up and roll onto one of your shoulders. Use your foot (same side as the shoulder you are laying on) to push your body and slide your hips back while you pivot on your shoulder. Your body should curve (like a shrimp). Reset your body and repeat the movement on the other side. You should be able to move all the way down the mat like this. This is a good way to escape an opponent standing over you without giving them more openings. ')]
+
+=== Delete operations ===
+Delete martial art move row count: 1
+MartialArtMoves table after delete: [(2, 3, 'Jiu Jitsu', 'Shrimping'), (3, 1, 'MMA', 'Jab'), (3, 2, 'MMA', 'Parallel Elbow Strike'), (1, 1, 'Muay Thai', 'Jab'), (1, 2, 'Muay Thai', 'Parallel Elbow Strike')]
+Delete event row count: 1
+Events table after delete: [(1, 'BJJ Open', '2026-11-15 00:00:00', 2, 'Jiu Jitsu'), (2, 'Gym Open Mat', '2026-12-07 00:00:00', None, None), (4, 'Test Event', '2027-01-15 00:00:00', None, None), (3, 'UFC Fight Night', '2026-12-19 00:00:00', 3, 'MMA')]
+
+=== Reset verification ===
+Delete seeded event (BJJ Open) row count: 1
+Reset database result: 1
+Read restored event: (1, 'BJJ Open', '2026-11-15 00:00:00', 2, 'Jiu Jitsu')
