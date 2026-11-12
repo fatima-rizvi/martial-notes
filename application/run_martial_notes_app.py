@@ -26,6 +26,7 @@ def main():
 
     q = MartialNotesQueries(cursor, conn)
 
+    print("=== Read queries ===")
     print("Select all martial arts:", q.get_all_martial_arts())
     print("Select martial art by ID:", q.get_martial_art_by_id(1))
     print("Select all moves:", q.get_all_moves())
@@ -35,12 +36,13 @@ def main():
     print("Select martial art move by ID:", q.get_martial_art_move_by_id(1, 1))
     print("Martial art move details:", q.get_martial_art_move_details(1, 1))
     print("Select all events:", q.get_all_events())
-    print("Select events for martial art:", q.get_events_for_martial_art(1))
+    print("Select events for martial art:", q.get_events_for_martial_art(2))
     print("Select event by ID:", q.get_event_by_id(1))
     print("Select all study sessions:", q.get_all_study_sessions())
     print("Select study sessions for martial art:", q.get_study_sessions_for_martial_art(1))
     print("Select study session by ID:", q.get_study_session_by_id(1))
 
+    print("\n=== Create operations ===")
     row_count = q.add_martial_art("Karate")
     conn.commit()
     print("Add martial art row count:", row_count)
@@ -78,6 +80,7 @@ def main():
     print("Add study session with eventID row count:", row_count)
     print("Study sessions table after inserts:", q.get_all_study_sessions())
 
+    print("\n=== Update operations ===")
     row_count = q.update_martial_art_move(1, new_move_id, 2, new_move_id)
     conn.commit()
     print("Update martial art move row count:", row_count)
@@ -92,6 +95,7 @@ def main():
     print("Update move row count:", row_count)
     print("Moves table after update:", q.get_all_moves())
 
+    print("\n=== Delete operations ===")
     row_count = q.delete_martial_art_move(2, new_move_id)
     conn.commit()
     print("Delete martial art move row count:", row_count)

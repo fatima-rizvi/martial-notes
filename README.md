@@ -54,6 +54,12 @@ Use a dedicated test database. The DDL script drops and recreates the project ta
 
 3. Run [`SQL/martial_notes_ddl.sql`](./SQL/martial_notes_ddl.sql) with your database selected. This creates the tables and inserts sample records.
 
+From the repository root, run:
+
+```text
+mysql -u <your_mysql_username> -p <your_database_name> < SQL\martial_notes_ddl.sql
+```
+
 ## Configure and run the application
 
 Open [`application/run_martial_notes_app.py`](./application/run_martial_notes_app.py) and update the MySQL connection values in `main()` to match your setup:
@@ -90,4 +96,8 @@ The prompts used to generate the python code and the README are available in the
 - The prompts used SQL queries that were our own original work, instructions from the CS340 Project Step 3 Draft assignment, our own project proposal, and the CS340 Python Crud assignment.
 - Files developed by prompts were then assessed and revised by us to ensure they were accurate and worked as expected. 
 - The virtual environment steps in the readme were added by us after the agent created the README, and we got those steps from the OSU CS340 canvas page "Exploration - Designing a Python Class for Database CRUD Operations"
-- All other work (the SQL code) is our own original work.
+
+Date 11/11/2026
+- Some of the updates we made to the code after getting our peer feedback (specifically: adding "ORDER BY" to queries, adding the name columns to the results, adding spacing to the CLI output, changing the event example in the test runner) were made using GitHub CoPilot. The prompt used to make these changes is in the `/prompts` folder in `Proj-Step-3-Updates-Post-Feedback.md`
+
+All other work (the original SQL code) is our own original work.

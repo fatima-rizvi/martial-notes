@@ -1,37 +1,51 @@
 -- Team 20: Fatima Rizvi and Michael Yanez
--- All work below is our own. Github copilot was used to verify that all necessary types of queries were included in the DML file, but it did not write the queries.
+-- The queries below were originally our own. Github copilot was used to verify that all necessary types of queries were included in the DML file, but it did not write the queries. After we got out step 3 feedback, we used GitHub copilot to add ordering to some of the queries with the following prompt.
 
 -- Select all rows from MartialArts
-select * from MartialArts;
+select * from MartialArts
+order by name;
 
 -- Select a specific MartialArts record by ID
 select * from MartialArts
 where martialArtID = :the_selected_MartialArtID;
 
 -- Select all rows from Moves
-select * from Moves;
+select * from Moves
+order by name;
 
 -- Select a specific Moves record by ID
 select * from Moves
 where moveID = :the_selected_MoveID;
 
 -- Select all moves that match a given martial arts type
-select Moves.name, description
+select Moves.name as moveName, Moves.description as moveDescription
 from Moves
 inner join MartialArtMoves on Moves.moveID = MartialArtMoves.moveID
 inner join MartialArts on MartialArtMoves.martialArtID = MartialArts.martialArtID
-where MartialArts.martialArtID = :the_selected_MartialArtID;
+where MartialArts.martialArtID = :the_selected_MartialArtID
+order by Moves.name;
+
 
 -- Select all rows from MartialArtMoves
-select * from MartialArtMoves;
+select MartialArtMoves.martialArtID, MartialArtMoves.moveID,
+       MartialArts.name as martialArtName, Moves.name as moveName
+from MartialArtMoves
+inner join MartialArts on MartialArtMoves.martialArtID = MartialArts.martialArtID
+inner join Moves on MartialArtMoves.moveID = Moves.moveID
+order by MartialArts.name, Moves.name;
 
 -- Select a specific MartialArtMoves record
-select * from MartialArtMoves
-where martialArtID = :the_selected_MartialArtID 
-and moveID = :the_selected_MoveID;
+select MartialArtMoves.martialArtID, MartialArtMoves.moveID,
+       MartialArts.name as martialArtName, Moves.name as moveName
+from MartialArtMoves
+inner join MartialArts on MartialArtMoves.martialArtID = MartialArts.martialArtID
+inner join Moves on MartialArtMoves.moveID = Moves.moveID
+where MartialArtMoves.martialArtID = :the_selected_MartialArtID
+and MartialArtMoves.moveID = :the_selected_MoveID;
 
 -- Select a specific MartialArtMoves record and display the move's name, type of martial art, and the description.
-select Moves.name, MartialArts.name as martial_art_type, Moves.description
+select Moves.name as moveName, MartialArts.name as martialArtName,
+       Moves.description as moveDescription
 from MartialArtMoves
 inner join Moves on MartialArtMoves.moveID = Moves.moveID
 inner join MartialArts on MartialArtMoves.martialArtID = MartialArts.martialArtID
@@ -39,26 +53,57 @@ where MartialArtMoves.martialArtID = :the_selected_MartialArtID
 and MartialArtMoves.moveID = :the_selected_MoveID;
 
 -- Select all rows from Events
-select * from Events;
+select Events.eventID, Events.name as eventName, Events.date,
+       Events.martialArtID, MartialArts.name as martialArtName
+from Events
+left join MartialArts on Events.martialArtID = MartialArts.martialArtID
+order by Events.name;
 
 -- Select all events that match a chosen martial arts type
-select * from Events
-where martialArtID = :the_selected_MartialArtID;
+select Events.eventID, Events.name as eventName, Events.date,
+       Events.martialArtID, MartialArts.name as martialArtName
+from Events
+left join MartialArts on Events.martialArtID = MartialArts.martialArtID
+where Events.martialArtID = :the_selected_MartialArtID
+order by Events.name;
 
 -- Select a specific Events record
-select * from Events
-where eventID = :the_selected_EventID;
+select Events.eventID, Events.name as eventName, Events.date,
+       Events.martialArtID, MartialArts.name as martialArtName
+from Events
+left join MartialArts on Events.martialArtID = MartialArts.martialArtID
+where Events.eventID = :the_selected_EventID;
 
 -- Select all rows from StudySessions
-select * from StudySessions;
+select StudySessions.studySessionID, StudySessions.date as sessionDate,
+       StudySessions.duration as sessionDuration, StudySessions.martialArtID,
+       StudySessions.eventID, MartialArts.name as martialArtName,
+       Events.name as eventName
+from StudySessions
+inner join MartialArts on StudySessions.martialArtID = MartialArts.martialArtID
+left join Events on StudySessions.eventID = Events.eventID
+order by MartialArts.name, Events.name;
 
 -- Select all study session records that match a chosen martial arts type
-select * from StudySessions
-where martialArtID = :the_selected_MartialArtID;
+select StudySessions.studySessionID, StudySessions.date as sessionDate,
+       StudySessions.duration as sessionDuration, StudySessions.martialArtID,
+       StudySessions.eventID, MartialArts.name as martialArtName,
+       Events.name as eventName
+from StudySessions
+inner join MartialArts on StudySessions.martialArtID = MartialArts.martialArtID
+left join Events on StudySessions.eventID = Events.eventID
+where StudySessions.martialArtID = :the_selected_MartialArtID
+order by MartialArts.name, Events.name;
 
 -- Select a specific StudySessions record
-select * from StudySessions
-where studySessionID = :the_selected_StudySessionID;
+select StudySessions.studySessionID, StudySessions.date as sessionDate,
+       StudySessions.duration as sessionDuration, StudySessions.martialArtID,
+       StudySessions.eventID, MartialArts.name as martialArtName,
+       Events.name as eventName
+from StudySessions
+inner join MartialArts on StudySessions.martialArtID = MartialArts.martialArtID
+left join Events on StudySessions.eventID = Events.eventID
+where StudySessions.studySessionID = :the_selected_StudySessionID;
 
 -- Insert a new MartialArts type
 insert into MartialArts (name)
