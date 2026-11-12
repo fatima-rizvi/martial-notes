@@ -11,7 +11,7 @@
 from datetime import date, datetime, timedelta
 
 import mysql.connector
-from martial_notes_app import MartialNotesQueries
+from martial_notes_app_plsql import MartialNotesQueries
 
 
 def _format_cli_result(value):
@@ -49,7 +49,11 @@ def main():
 
     q = MartialNotesQueries(cursor, conn)
 
-    print("=== Read queries ===")
+    print("=== Reset database ===")
+    print("Reset database result:", q.reset_database())
+    print("Read event after reset:", _format_cli_result(q.get_event_by_id(1)))
+
+    print("\n=== Read queries ===")
     print("Select all martial arts:", q.get_all_martial_arts())
     print("Select martial art by ID:", q.get_martial_art_by_id(1))
     print("Select all moves:", q.get_all_moves())
@@ -80,7 +84,7 @@ def main():
     row_count = q.add_move(new_move_name, new_move_description)
     conn.commit()
     print("Add move row count:", row_count)
-    new_move_id = cursor.lastrowid
+    new_move_id = q.last_inserted_id
     print("Moves table after insert:", q.get_all_moves())
 
     row_count = q.add_martial_art_move(1, new_move_id)
@@ -94,7 +98,7 @@ def main():
 
     row_count = q.add_event("Test Event 2", "2027-01-16 00:00:00", 1)
     conn.commit()
-    event_id_to_delete = cursor.lastrowid
+    event_id_to_delete = q.last_inserted_id
     print("Add event with martialArtID row count:", row_count)
     print("Events table after inserts:", _format_cli_result(q.get_all_events()))
 
