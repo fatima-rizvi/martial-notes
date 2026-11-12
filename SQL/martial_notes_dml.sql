@@ -20,7 +20,7 @@ select Moves.name, description
 from Moves
 inner join MartialArtMoves on Moves.moveID = MartialArtMoves.moveID
 inner join MartialArts on MartialArtMoves.martialArtID = MartialArts.martialArtID
-where MartialArts.martialArtID = :the_selected_MartialArtID
+where MartialArts.martialArtID = :the_selected_MartialArtID;
 
 -- Select all rows from MartialArtMoves
 select * from MartialArtMoves;
@@ -62,39 +62,41 @@ where studySessionID = :the_selected_StudySessionID;
 
 -- Insert a new MartialArts type
 insert into MartialArts (name)
-values (:martialArtName_input)
+values (:martialArtName_input);
 
 -- Insert a new Moves record
 insert into Moves (name, description)
-values (:moveName_input, :moveDescription_input)
+values (:moveName_input, :moveDescription_input);
 
 -- Insert a MartialArtMoves relationship
 insert into MartialArtMoves (martialArtID, moveID)
-values (:martialArtID_for_the_selected_martial_art, :moveID_for_the_new_move)
+values (:martialArtID_for_the_selected_martial_art, :moveID_for_the_new_move);
 
 -- Insert a new Events record
 insert into Events (name, date, martialArtID)
-values (:eventName_input, :eventDate_input, :martialArtID_for_the_selected_martial_art)
+values (:eventName_input, :eventDate_input, :martialArtID_for_the_selected_martial_art);
 
 -- Insert a new StudySessions record
 insert into StudySessions (date, duration, martialArtID, eventID)
-values (:studySessionDate_input, :studySessionDuration_input, :martialArtID_for_the_selected_martial_art, :eventID_for_the_selected_event)
+values (:studySessionDate_input, :studySessionDuration_input,
+        :martialArtID_for_the_selected_martial_art,
+        :eventID_for_the_selected_event);
 
 -- Update a MartialArtMoves relationship
 update MartialArtMoves 
 set martialArtID = :martialArtID_input, moveID = :moveID_input 
 where martialArtID = :the_original_MartialArtID 
-and moveID = :the_original_MoveID
+and moveID = :the_original_MoveID;
 
 -- Update a Moves record
 update Moves
 set name = :moveName_input, description = :moveDescription_input
-where moveID = :the_selected_MoveID
+where moveID = :the_selected_MoveID;
 
 -- Delete one MartialArtMoves relationship
 delete from MartialArtMoves
 where martialArtID = :the_selected_MartialArtID 
-and moveID = :the_selected_MoveID
+and moveID = :the_selected_MoveID;
 
 -- Delete an Events record
 delete from Events

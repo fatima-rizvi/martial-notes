@@ -17,10 +17,10 @@ def main():
 
     # replace the values below with your own DB information
     conn = mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='<db password>',
-        database='<db name>'
+        host='localhost',        
+        user='<your MySQL username>',
+        password='<your MySQL password>',
+        database='<your_database_name>'
     )
     cursor = conn.cursor()
 
