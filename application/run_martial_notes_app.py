@@ -4,8 +4,10 @@
 # The prompt used to generate this code is in the file "Proj-Step-3-Init-Python-App.md"
 # in this repo's "prompts" folder. The prompt used SQL queries that were written
 # without AI, and the SQL queries are available in the "martial_notes_dml.sql"
-# file in this repo's "SQL" folder. After the initial generation, the test runner was modified by us without AI to make sure it had all the necessary information for the grader and for anyone else running it.
-
+# file in this repo's "SQL" folder. 
+# After the initial generation, the test runner was reviewed and revised based on peer feedback. 
+# Some post-feedback updates were made using GitHub Copilot. The prompt used for those changes 
+# is in "Proj-Step-3-Updates-Post-Feedback.md" in this repo's "prompts" folder.
 """Exercise every MartialNotesQueries method against the configured database."""
 
 from datetime import date, datetime, timedelta
