@@ -1,5 +1,7 @@
 -- Team 20: Fatima Rizvi and Michael Yanez
 -- The queries below were originally our own. Github copilot was used to verify that all necessary types of queries were included in the DML file, but it did not write the queries. After we got out step 3 feedback, we used GitHub copilot to add ordering to some of the queries with the following prompt.
+-- This DML file uses named placeholders such as :the_selected_MartialArtID for readability.
+-- In the Python application, these placeholders are written as %s because mysql-connector-python uses %s for parameterized queries.
 
 -- Select all rows from MartialArts
 select * from MartialArts
