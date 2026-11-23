@@ -52,17 +52,20 @@ Use a dedicated test database. The DDL script drops and recreates the project ta
    USE <your_database_name>;
    ```
 
-3. Run [`SQL/martial_notes_ddl.sql`](./SQL/martial_notes_ddl.sql) with your database selected. This creates the tables and inserts sample records.
+3. Install the stored procedures first, then run the DDL script. The DDL script drops and recreates the tables and inserts sample records through the create procedures:
 
 From the repository root, run:
 
 ```text
+mysql -u <your_mysql_username> -p <your_database_name> < SQL\martial_notes_plsql.sql
 mysql -u <your_mysql_username> -p <your_database_name> < SQL\martial_notes_ddl.sql
 ```
 
+The DDL script is destructive and depends on the procedures being installed first. Re-running it resets the tables and sample data. The separate `sp_ResetMartialNotesDatabase` procedure can also restore that initial state.
+
 ## Configure and run the application
 
-Open [`application/run_martial_notes_app.py`](./application/run_martial_notes_app.py) and update the MySQL connection values in `main()` to match your setup:
+Open [`application/run_martial_notes_app_plsql.py`](./application/run_martial_notes_app_plsql.py) and update the MySQL connection values in `main()` to match your setup:
 
 ```python
 host='localhost',
@@ -77,12 +80,12 @@ From the repository root, run:
 
 ```text
 cd application
-python run_martial_notes_app.py
+python run_martial_notes_app_plsql.py
 ```
 
 The runner reads from all five tables, then demonstrates create, update, and delete operations and prints affected-row counts and table contents. A successful write generally prints a row count of `1`.
 
-**The runner commits its changes to the configured database.** It leaves behind the Karate martial art, Front Kick move, Test Event, and study sessions it creates; repeated runs add more records. Use a disposable test database and re-run the DDL only when you are ready to drop and recreate its tables and sample data.
+**The runner commits its changes to the configured database.**  The Step 4 runner demonstrates RESET, READ, CREATE, UPDATE, and DELETE operations. At the end of the test, it runs the RESET procedure again so the database is restored to the original sample data.
 
 [`application/CLI_OUT.txt`](./application/CLI_OUT.txt) contains an example run. Output rows and generated IDs can vary depending on the database contents.
 
@@ -99,5 +102,8 @@ The prompts used to generate the python code and the README are available in the
 
 Date 11/11/2026
 - Some of the updates we made to the code after getting our peer feedback (specifically: adding "ORDER BY" to queries, adding the name columns to the results, adding spacing to the CLI output, changing the event example in the test runner) were made using GitHub CoPilot. The prompts used to make these changes are in the `/prompts` folder in `Proj-Step-3-Updates-Post-Feedback.md`
+
+Date 11/11/2026
+- The changes needed for step 4 (converting SQL to PL where appropriate, updating our code to use the PL, updating the steps in the README, etc.) were made using GitHub CoPilot. The prompts used to make these changes are in the `/prompts` folder in `Proj-Step-4-Update-to-PL-and-SQL.md`. The agent's work was reviewed and revised by us.
 
 All other work (the original SQL code) is our own original work.
