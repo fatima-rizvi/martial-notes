@@ -52,16 +52,16 @@ Use a dedicated test database. The DDL script drops and recreates the project ta
    USE <your_database_name>;
    ```
 
-3. Install the stored procedures first, then run the DDL script. The DDL script drops and recreates the tables and inserts sample records through the create procedures:
+3. Run the DDL script first to create the tables, load the sample data, and install the RESET procedure. Then run the PL/SQL file to install the CREATE, UPDATE, and DELETE procedures:
 
 From the repository root, run:
 
 ```text
-mysql -u <your_mysql_username> -p <your_database_name> < SQL\martial_notes_plsql.sql
 mysql -u <your_mysql_username> -p <your_database_name> < SQL\martial_notes_ddl.sql
+mysql -u <your_mysql_username> -p <your_database_name> < SQL\martial_notes_plsql.sql
 ```
 
-The DDL script is destructive and depends on the procedures being installed first. Re-running it resets the tables and sample data. The separate `sp_ResetMartialNotesDatabase` procedure can also restore that initial state.
+The DDL script is destructive because it drops and recreates the project tables. Re-running it resets the tables and restores the original sample data using the `sp_ResetMartialNotesDatabase` procedure.
 
 ## Configure and run the application
 
