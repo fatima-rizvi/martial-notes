@@ -65,7 +65,7 @@ The DDL script is destructive and depends on the procedures being installed firs
 
 ## Configure and run the application
 
-Open [`application/run_martial_notes_app.py`](./application/run_martial_notes_app.py) and update the MySQL connection values in `main()` to match your setup:
+Open [`application/run_martial_notes_app_plsql.py`](./application/run_martial_notes_app_plsql.py) and update the MySQL connection values in `main()` to match your setup:
 
 ```python
 host='localhost',
@@ -80,12 +80,12 @@ From the repository root, run:
 
 ```text
 cd application
-python run_martial_notes_app.py
+python run_martial_notes_app_plsql.py
 ```
 
 The runner reads from all five tables, then demonstrates create, update, and delete operations and prints affected-row counts and table contents. A successful write generally prints a row count of `1`.
 
-**The runner commits its changes to the configured database.** It leaves behind the Karate martial art, Front Kick move, Test Event, and study sessions it creates; repeated runs add more records. Use a disposable test database and re-run the DDL only when you are ready to drop and recreate its tables and sample data.
+**The runner commits its changes to the configured database.**  The Step 4 runner demonstrates RESET, READ, CREATE, UPDATE, and DELETE operations. At the end of the test, it runs the RESET procedure again so the database is restored to the original sample data.
 
 [`application/CLI_OUT.txt`](./application/CLI_OUT.txt) contains an example run. Output rows and generated IDs can vary depending on the database contents.
 

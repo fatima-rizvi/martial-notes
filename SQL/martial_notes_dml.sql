@@ -1,6 +1,7 @@
 -- Team 20: Fatima Rizvi and Michael Yanez
 -- The queries below were originally our own. Github copilot was used to verify that all necessary types of queries were included in the DML file, but it did not write the queries. After we got out step 3 feedback, we used GitHub copilot to add ordering to some of the queries with the following prompt.
-
+-- This DML file uses named placeholders such as :the_selected_MartialArtID for readability.
+-- In the Python application, these placeholders are written as %s because mysql-connector-python uses %s for parameterized queries.
 -- Select all rows from MartialArts
 select * from MartialArts
 order by name;
@@ -105,44 +106,5 @@ inner join MartialArts on StudySessions.martialArtID = MartialArts.martialArtID
 left join Events on StudySessions.eventID = Events.eventID
 where StudySessions.studySessionID = :the_selected_StudySessionID;
 
--- Insert a new MartialArts type
-insert into MartialArts (name)
-values (:martialArtName_input);
-
--- Insert a new Moves record
-insert into Moves (name, description)
-values (:moveName_input, :moveDescription_input);
-
--- Insert a MartialArtMoves relationship
-insert into MartialArtMoves (martialArtID, moveID)
-values (:martialArtID_for_the_selected_martial_art, :moveID_for_the_new_move);
-
--- Insert a new Events record
-insert into Events (name, date, martialArtID)
-values (:eventName_input, :eventDate_input, :martialArtID_for_the_selected_martial_art);
-
--- Insert a new StudySessions record
-insert into StudySessions (date, duration, martialArtID, eventID)
-values (:studySessionDate_input, :studySessionDuration_input,
-        :martialArtID_for_the_selected_martial_art,
-        :eventID_for_the_selected_event);
-
--- Update a MartialArtMoves relationship
-update MartialArtMoves 
-set martialArtID = :martialArtID_input, moveID = :moveID_input 
-where martialArtID = :the_original_MartialArtID 
-and moveID = :the_original_MoveID;
-
--- Update a Moves record
-update Moves
-set name = :moveName_input, description = :moveDescription_input
-where moveID = :the_selected_MoveID;
-
--- Delete one MartialArtMoves relationship
-delete from MartialArtMoves
-where martialArtID = :the_selected_MartialArtID 
-and moveID = :the_selected_MoveID;
-
--- Delete an Events record
-delete from Events
-where eventID = :the_selected_EventID;
+-- CREATE, UPDATE, and DELETE operations were converted to stored procedures
+-- for Step 4 and are defined in SQL/martial_notes_plsql.sql.
