@@ -5,7 +5,9 @@
 # in this repo's "prompts" folder. The prompt used SQL queries that were written
 # without AI, and the SQL queries are available in the "martial_notes_dml.sql"
 # and "martial_notes_ddl.sql" files in this repo's "SQL" folder.
-
+# After the initial generation, some methods were revised based on Step 3 peer feedback.
+# GitHub Copilot was used to help with some post-feedback updates, including ordering and displaying related entity names.
+# The prompt used for those changes is in "Proj-Step-3-Updates-Post-Feedback.md" in this repo's "prompts" folder.
 """Application-tier queries for managing the Martial Notes database."""
 
 import mysql.connector
